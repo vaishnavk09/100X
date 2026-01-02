@@ -30,7 +30,7 @@ app.post("/signin", (req, res) => {
 
     if (user) {
         const token = jwt.sign({username},JWT_SECRET);
-        user.token = token;
+        // user.token = token;
         res.send({
             token
         })
@@ -44,11 +44,23 @@ app.post("/signin", (req, res) => {
 
 
 app.get("/me", (req, res) => {
-    const token = req.headers.authorization;
-    const user = users.find(user => user.token === token);
-    if (user) {
-        res.send({
-            username: user.username
+    // const token = req.headers.authorization;
+    const token = req.headers.token;
+    const decodedinfo = jwt.verify(token, JWT_SECRET);
+    const username= decodedinfo.username;
+    let foundUser=null;
+    for(let i=0;i<users.length;i++){
+        if(users[i].username===username){
+            foundUser=users[i];
+            break;
+        }
+    }
+
+    if (foundUser) {
+    
+        res.json({
+            username: foundUser.username,
+            password: foundUser.password
         })
     } else {
         res.status(401).send({
