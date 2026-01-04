@@ -51,22 +51,26 @@ else{
 
 })
 
-app.post('/todo',auth,(req,res)=>{
+app.post('/todo',auth,async(req,res)=>{
+const userId = req.userId
+const title = req.body.title
+const done = req.body.done
 
+await TodosModel.create({
+    userId:userId,
+    title:title,
+    done:done
+})
+res.json({message: "todo created successfully"})
 })
 
-app.get('/todos',auth,(req,res)=>{
-
+app.get('/todos',auth, async(req,res)=>{
+ const userId = req.id
+  const todos = await TodosModel.find({
+    userId:userId
+  })
+  res.json({todos:todos})
 })
-
-
-
-
-
-
-
-
-
 
 
 
