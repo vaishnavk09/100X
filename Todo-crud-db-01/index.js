@@ -1,6 +1,6 @@
 const express = require("express")
 const jwt = require("jsonwebtoken")
-
+const bcrypt = require("bcryptjs")
 const {auth, JWT_SECRET} = require("./auth")
 const {UserModel, TodosModel} = require("./db")
 const  mongoose = require("mongoose")
@@ -9,32 +9,38 @@ app.use(express.json())
 mongoose.connect("env.MONGODB_URL")
 
 app.post('/signup',async (req,res)=>{
+    try{
 const name = req.body.name
 const email = req.body.email
 const password = req.body.password
 
+const hashedPassword= await(bcrypt.hash(password,10))
 
 await UserModel.create({
     name: name,
     email: email,
-    password: password
+    password: hashedPassword
 
 })
 res.json({message: "user signed up successfully"
 
 })
+    }catch(err)
+    {
+        res.status(500).json({message: "internal server error"})
+    }
 })
 
 app.post('/signin', async(req,res)=>{
+    
 const {email, password} = req.body
 
 const response= await UserModel.findOne({
     email:email,
-    password:password,
-
-
 })
-if(response)
+const passwordMatch= await bcrypt.compare(password,response.password)
+
+if(response && passwordMatch)
 {
     const token =jwt.sign({
         id:response._id.toString(),
