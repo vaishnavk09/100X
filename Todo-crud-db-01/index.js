@@ -16,7 +16,8 @@ app.post('/signup',async (req,res)=>{
             {
                 email:  z.string().email(),
                 name: z.string().min(3).max(100),
-                password:z.string().min(8).max(30)
+                password:z.string().min(8).max(30).regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)
+                
 
             }
         )

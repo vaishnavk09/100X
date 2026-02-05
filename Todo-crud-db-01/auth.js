@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "some of us are not most of us but all of us are one of us";
-
+const JWT_SECRET = env.JWT_SECRET;
 function auth(req, res, next) {
     const token = req.headers.token;
 
