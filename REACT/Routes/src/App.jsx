@@ -1,70 +1,68 @@
 import React from 'react'
-import "./App.css"
-import { BrowserRouter, Routes, Route, Link, Outlet } from 'react-router-dom'
-
-
+import { BrowserRouter, Routes, Route, Link, Outlet} from 'react-router-dom'
 const App = () => {
   return (
-    <BrowserRouter>
-  
-    <Routes>
-        <Route path="/" element={<Layout/>}>
+    <div>
+<BrowserRouter>
+   <Routes> 
 
-                <Route path='/' element= {<Landing/>} />
-                <Route path='/neet/online-coaching-class-11' element= {<Class11/>} />
-                <Route path='/neet/online-coaching-class-12' element= {<Class12/>} />
-       </Route>
+ 
+ <Route path = '/' element = {<Layout/>}>
+     <Route path = '/' element={<Landing/>}/>
+    <Route path = '/home' element={<Home/>}/>
+    <Route path = '/about' element={<About/>}/>
+ </Route>
 
-        <Route path='*' element = {<NotFound/>}/>
-    </Routes>
-    </BrowserRouter>
+    <Route path = '*' element={<h1>Page Not Found 404</h1>}/>
+
+   </Routes>
+</BrowserRouter>
+
+    </div>
   )
-
-
 }
 
-const Layout = ()=>{
-    return(
+const Layout = () => {
+    return (
         <>
-  <Link to='/'>HOME</Link> | <Link to='/neet/online-coaching-class-11'>Class 11</Link> | <Link to='/neet/online-coaching-class-12'>Class 12</Link>
-  <Outlet/>
-  contact us | about us | terms and conditions | privacy policy
-  </>
+         <Link to = '/'>Landing</Link> |
+         <Link to = '/home'>Home</Link> |
+         <Link to = '/about'>About</Link>
+         <Outlet/>
+
+         contact | about | home
+        </>
+    )
+}
+
+const Landing = () => {
+    return (
+    <>
+ <h1>welcome to landingggg</h1>
+    </>
     )
 }
 
 
-
-const Landing = () =>{
-    return(
-        <div>
-            <h1>Welcome to Allen</h1>
-        </div>
+const Home = () => {
+    return (
+    <>
+    <h1>This is Home</h1>
+    </>
     )
-}
+    
+} 
 
-const Class11 = () =>{
-    return(
-        <div>
-            <h1>Class 11th</h1>
-        </div>
+const About = () => {
+    return (
+    <>
+    <h1>This is About</h1>
+    </>
     )
-    }
+    
+} 
 
-const Class12 = () =>{
-    return(
-        <div>        
-            <h1>Class 12th</h1>
-        </div>
-    )
-    }
 
-const NotFound = () =>{
-    return(
-        <div>
-            <h1>404 Not Found</h1>
-                <p>pagal hai kya ye page exist hi nahi krta hai.</p>
-        </div>)}
 
 
 export default App

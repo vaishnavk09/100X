@@ -5,13 +5,14 @@ const App = () => {
 
   const [time, settime] = useState(0)
 
- useEffect(() => {
+ useEffect(()=>{
   setInterval(()=>{
 
     settime(time=> time+1)
 
   },1000)
- }, [])
+},[])
+
 
   return (
     <div>
